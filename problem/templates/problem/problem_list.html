@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Problem List
+{% endblock title %}
+
+
+{% block content %}
+    <h2>Here is the available problem list : </h2>
+
+        {% for problem in problem_list %}
+            <div class="card">
+                <div class="card-header">
+                <span class="font-weight-bold">{{ problem.pk }}</span> &middot;
+                <span class="text-muted">TL: {{ problem.time_limit }}sec | ML:
+                {{ problem.memory_limit }}MB</span>
+                </div>
+                <div class="card-body">
+                {{ problem.title }}
+                </div>
+                <div class="card-footer text-center text-muted">
+                <a href="{% url 'problem:problem_detail' pk=problem.pk %}">View</a> | <a href="#">Delete</a>
+            </div>
+    {% endfor %}
+        
+    
+{% endblock content %}
+    
