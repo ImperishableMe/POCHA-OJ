@@ -8,9 +8,12 @@ https://docs.djangoproject.com/en/2.2/howto/deployment/wsgi/
 """
 
 import os
+import subprocess
 
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'online_judge.settings')
+
+subprocess.Popen("python manage.py process_tasks",shell=True)
 
 application = get_wsgi_application()

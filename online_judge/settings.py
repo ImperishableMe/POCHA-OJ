@@ -31,13 +31,20 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+#    my apps
+    'problem.apps.ProblemConfig',
+
+# 3rd party apps
+    'bootstrap4',
+    'background_task',
+#   given apps 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'problem',
+    
 ]
 
 MIDDLEWARE = [

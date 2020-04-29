@@ -1,25 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class='problem-header'>
-        <h2>{{problem.title}}</h2>
-        <p>Time Limit : {{problem.time_limit}}sec | Memory Limit :{{problem.memory_limit}}MB</p>
-        {% comment %} submit link {% endcomment %}
-        <a href="#" class="btn btn-outline-success" role="button">Submit</a>
+    <div class='jumbotron'>
+
+        <div class='problem-header'>
+            <h2>{{problem.title}}</h2>
+            <p>Time Limit : {{problem.time_limit}}sec | Memory Limit :{{problem.memory_limit}}MB</p>
+            {% comment %} submit link {% endcomment %}
+            <a href="{% url 'problem:submit' pid=problem.pk %}" class="btn btn-outline-success" role="button">Submit</a>
 
 
-        <div class='problem-statement'>
-            <p>{{problem.statement|escape|linebreaks}}</p>
-        </div>
-        {% for case in sample_test_cases %}
-            <div class='sample-input-output'>
-                <h3>Sample Input:</h3>
-                <p>{{case.case_input|escape|linebreaks}}</p>
-                <h3>Sample Output:</h3>
-                <p>{{case.expected_output|escape|linebreaks}}</p>
+            <div class='problem-statement'>
+                <p>{{problem.statement|escape|linebreaks}}</p>
             </div>
+            {% for case in sample_test_cases %}
+                <div class='sample-input-output'>
+                    <h3>Sample Input:</h3>
+                    <p>{{case.case_input|escape|linebreaks}}</p>
+                    <h3>Sample Output:</h3>
+                    <p>{{case.expected_output|escape|linebreaks}}</p>
+                </div>
 
-        {% endfor %}
+            {% endfor %}
 
+        </div>
     </div>
 {% endblock content %}  

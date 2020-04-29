@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator
 # Create your models here.
 
@@ -33,3 +35,55 @@ class TestCase(models.Model):
     def __str__(self):
         return str(self.problem.pk) + '-' + str(self.pk) 
 
+
+class Submission(models.Model):
+    C = 1
+    CPP = 2
+    JAVA = 3
+    PYTHON = 4
+    ####
+    WA = 1
+    AC = 2
+    TLE = 3
+    MLE = 4
+    RUNNING = 5
+    IN_QUEUE = 6
+
+    languages = (
+        (C, _('C')),
+        (CPP, _('CPP')),
+        (JAVA,_('JAVA')),
+        (PYTHON,_('PYTHON')),
+    )
+    VERDICT_STATES = (
+        (WA, _('WRONG ANSWER')),
+        (AC, _('ACCEPTED')),
+        (TLE,_('TLE')),
+        (MLE,_('MLE')),
+        (RUNNING,_('RUNNING')),
+        (IN_QUEUE,_('IN QUEUE')),
+    )
+
+    problem = models.ForeignKey(Problem,related_name='submissions',on_delete=models.CASCADE)   
+    time = models.DateTimeField(auto_now_add=True)
+    code = models.TextField()
+    language = models.SmallIntegerField(
+        default = CPP,
+        choices = languages
+    )
+
+    # verdict = models.SmallIntegerField(
+    #     default = IN_QUEUE,
+    #     choices = VERDICT_STATES    
+    # )
+    # on_test_case = models.SmallIntegerField(default=0)     
+        
+
+    def __str__(self):
+        return "SID:{},LAN:{},time:{}".format(self.pk,self.language,self.time)
+
+    def get_absolute_url(self):
+        return reverse('problem:problem_list')
+
+
+#class SubmissionHistory
