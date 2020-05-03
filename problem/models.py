@@ -48,6 +48,7 @@ class Submission(models.Model):
     MLE = 4
     RUNNING = 5
     IN_QUEUE = 6
+    RE = 7
 
     languages = (
         (C, _('C')),
@@ -60,6 +61,7 @@ class Submission(models.Model):
         (AC, _('ACCEPTED')),
         (TLE,_('TLE')),
         (MLE,_('MLE')),
+        (RE,_('RUNTIME ERROR')),
         (RUNNING,_('RUNNING')),
         (IN_QUEUE,_('IN QUEUE')),
     )
@@ -67,23 +69,26 @@ class Submission(models.Model):
     problem = models.ForeignKey(Problem,related_name='submissions',on_delete=models.CASCADE)   
     time = models.DateTimeField(auto_now_add=True)
     code = models.TextField()
+    time_required = models.FloatField(blank=True,null=True)
+    memory_required = models.IntegerField(blank=True,null=True)
+
     language = models.SmallIntegerField(
         default = CPP,
         choices = languages
     )
 
-    # verdict = models.SmallIntegerField(
-    #     default = IN_QUEUE,
-    #     choices = VERDICT_STATES    
-    # )
-    # on_test_case = models.SmallIntegerField(default=0)     
+    verdict = models.SmallIntegerField(
+        default = IN_QUEUE,
+        choices = VERDICT_STATES    
+    )
+    on_test_case = models.SmallIntegerField(default=0)     
         
 
     def __str__(self):
         return "SID:{},LAN:{},time:{}".format(self.pk,self.language,self.time)
 
     def get_absolute_url(self):
-        return reverse('problem:problem_list')
+        return reverse('problem:submission_list')
 
 
 #class SubmissionHistory

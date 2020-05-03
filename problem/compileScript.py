@@ -3,9 +3,11 @@ import subprocess,os,sys
 
 def main():
     args = sys.argv[1:]
-    p = subprocess.Popen(args)
-    p.wait()
-    print(p.returncode)
+    try :
+        p = subprocess.check_output(args,stderr=subprocess.DEVNULL)
+        print("0")
+    except subprocess.CalledProcessError:
+        print("1")
 
 if __name__ == "__main__":
     main()

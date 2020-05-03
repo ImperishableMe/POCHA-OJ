@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Judge Status
+{% endblock title %}       
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">When</th>
+            <th scope="col">Problem</th>
+            <th scope="col">Verdict</th>
+            <th scope="col">Time</th>
+            <th scope="col">Memory</th>
+            <th scope="col">test so far</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for submission in submission_list %}
+                <tr>
+                    <td>{{submission.id}}</td>
+                    <td>{{submission.time}}</td>
+                    <td>{{submission.problem.title}}</td>
+                    <td>{{submission.get_verdict_display}}</td>
+                    <td>{{submission.time_required}} sec</td>
+                    <td>{{submission.memory_required}} KB</td>
+                    <td>{{submission.on_test_case}}</td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+{% endblock content %}

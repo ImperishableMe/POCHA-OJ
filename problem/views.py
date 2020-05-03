@@ -23,7 +23,7 @@ class ProblemDetailView(DetailView):
 
 class SubmitView(CreateView):
     model = models.Submission
-    fields = '__all__'
+    fields = ['problem','code','language']
     template_name = 'problem/submission_form.html'
 
     def get_form(self):
@@ -45,5 +45,12 @@ class SubmitView(CreateView):
         tasks.submission_evaluate(submission.pk)
         # function call 
 
-        return redirect('problem:problem_list')
-        
+        return redirect(submission.get_absolute_url())
+
+
+class SubmissionListView(ListView):
+    model = models.Submission
+    template_name = 'problem/submission_list.html'
+
+    def get_queryset(self):
+        return models.Submission.objects.order_by('-time')
