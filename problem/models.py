@@ -49,6 +49,7 @@ class Submission(models.Model):
     RUNNING = 5
     IN_QUEUE = 6
     RE = 7
+    CE = 8
 
     languages = (
         (C, _('C')),
@@ -64,6 +65,7 @@ class Submission(models.Model):
         (RE,_('RUNTIME ERROR')),
         (RUNNING,_('RUNNING')),
         (IN_QUEUE,_('IN QUEUE')),
+        (CE,_('COMPILATION ERROR')),
     )
 
     problem = models.ForeignKey(Problem,related_name='submissions',on_delete=models.CASCADE)   

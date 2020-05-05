@@ -54,6 +54,7 @@ def execution_handler(s_id):
         # update the submission database as running on testcase i 
 
         submission.on_test_case = test_num + 1
+        submission.verdict = Submission.RUNNING
         submission.save()
 
         input_txt = cur_test.case_input
