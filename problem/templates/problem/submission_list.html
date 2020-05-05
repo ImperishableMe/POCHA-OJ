@@ -25,9 +25,9 @@
                     <td>{{submission.time}}</td>
                     <td>{{submission.problem.title}}</td>
                     <td>{{submission.get_verdict_display}}</td>
-                    <td>{{submission.time_required}} sec</td>
+                    <td>{{submission.time_required}} ms</td>
                     <td>{{submission.memory_required}} KB</td>
-                    <td>{{submission.on_test_case}}</td>
+                    <td>{{submission.on_test_case}}/{{submission.problem.testcases.count }}</td>
                 </tr>
             {% endfor %}
             

@@ -83,7 +83,7 @@ def execution_handler(s_id):
             if memory > submission.problem.memory_limit*1024 :
                 submission.verdict = Submission.MLE
 
-            elif time > submission.problem.time_limit:
+            elif time > submission.problem.time_limit*1000:
                 submission.verdict = Submission.TLE
 
             else :
@@ -100,7 +100,7 @@ def execution_handler(s_id):
                 submission.verdict = Submission.MLE
 
 
-            elif time > submission.problem.time_limit :
+            elif time > submission.problem.time_limit*1000 :
                 submission.verdict = Submission.TLE
                 
             else :
