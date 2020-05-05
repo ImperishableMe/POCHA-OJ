@@ -7,12 +7,12 @@ int main(){
     long long sum = 0;
     
 
-    // while(n){
-    //     sum += n;
-    //     n--;
-    // }
+     while(n){
+         sum += n;
+         n--;
+     }
     
-    sum = 1LL* n * (n+1) / 2;
+    
 
     cout << sum << endl;
 
