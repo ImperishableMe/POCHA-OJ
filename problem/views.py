@@ -39,9 +39,8 @@ class SubmitView(CreateView):
         return form
 
     def form_valid(self, form):
-        submission = form.save(commit=False)
-        submission.save()
-        
+        form.instance.submitted_by = self.request.user ### setting the current user as the owner of the submission
+        submission = form.save()
         tasks.submission_evaluate(submission.pk)
         # function call 
 
@@ -53,4 +52,4 @@ class SubmissionListView(ListView):
     template_name = 'problem/submission_list.html'
 
     def get_queryset(self):
-        return models.Submission.objects.order_by('-time')
+        return models.Submission.objects.filter(submitted_by__username=self.request.user.username).order_by('-time')

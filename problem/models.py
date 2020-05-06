@@ -2,9 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator
-
-from accounts.models import CustomUser
-
+from django.conf import settings
 
 
 class Problem(models.Model):
@@ -20,12 +18,14 @@ class Problem(models.Model):
     statement = models.TextField()
     time_limit = models.FloatField(default = 3.0, validators=[MinValueValidator(0.0),MaxValueValidator(5.0)])
     memory_limit = models.PositiveSmallIntegerField(default = 256, validators = [MaxValueValidator(1024)] )
-    owner = models.ForeignKey(CustomUser,on_delete=models.CASCADE,related_name='created_problems')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='created_problems')
     is_public = models.BooleanField(default=False)
     adding_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.pk) + "-" + self.title
+    
+
     
 class TestCase(models.Model):
     '''
@@ -79,6 +79,7 @@ class Submission(models.Model):
     code = models.TextField()
     time_required = models.FloatField(blank=True,null=True)
     memory_required = models.IntegerField(blank=True,null=True)
+    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='my_submissions')
 
     language = models.SmallIntegerField(
         default = CPP,
