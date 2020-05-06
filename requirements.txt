@@ -1,0 +1,9 @@
+beautifulsoup4==4.9.0
+Django==2.2.10
+django-background-tasks==1.2.5
+django-bootstrap4==1.1.1
+django-compat==1.0.15
+pytz==2020.1
+six==1.14.0
+soupsieve==2.0
+sqlparse==0.3.1
