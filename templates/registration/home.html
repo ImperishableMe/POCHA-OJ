@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if user.is_authenticated %}
-    Welcome {{ user.username }}
-    <p><a href= '{% url "logout" %}'>Log Out</p>
-    
-{% else %}
-        <p><a href= '{% url "login" %}'>Log In</p>
-        <p><a href= '{% url "signup" %}'>Sign Up</p>
-{% endif %}
 
+    <div class="jumbotron">
+        <h1 class="display- ">Pocha Online Judge</h1>
+        <p class="lead">A Futile Effort to Copy LightOJ </p>
+        <p class="lead">
+        <a class="btn btn-primary btn-lg" href="{% url 'problem:problem_list' %}"
+        role="button">View All Problems</a>
+        </p>
+    </div>
 {% endblock content %}

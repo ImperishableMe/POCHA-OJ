@@ -1,10 +1,13 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from . import models 
-from . import tasks
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import (ListView,
                                 DetailView,
                                 CreateView)
-# Create your views here.
+
+
+from . import models 
+from . import tasks
+
 
 class ProblemListView(ListView):
     model = models.Problem
@@ -21,7 +24,8 @@ class ProblemDetailView(DetailView):
         return context
 
 
-class SubmitView(CreateView):
+class SubmitView(LoginRequiredMixin,CreateView):
+
     model = models.Submission
     fields = ['problem','code','language']
     template_name = 'problem/submission_form.html'
@@ -39,11 +43,11 @@ class SubmitView(CreateView):
         return form
 
     def form_valid(self, form):
+
         form.instance.submitted_by = self.request.user ### setting the current user as the owner of the submission
         submission = form.save()
-        tasks.submission_evaluate(submission.pk)
-        # function call 
-
+        tasks.submission_evaluate(submission.pk) ### dump the submission into task_queue 
+        
         return redirect(submission.get_absolute_url())
 
 

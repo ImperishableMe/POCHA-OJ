@@ -18,8 +18,9 @@
                 <div class="card-body">
                 {{ problem.title }}
                 </div>
+
                 <div class="card-footer text-center text-muted">
-                <a href="{% url 'problem:problem_detail' pk=problem.pk %}">View</a> | <a href="#">Delete</a>
+                <a href="{% url 'problem:problem_detail' pk=problem.pk %}">View</a>
             </div>
     {% endfor %}
         
