@@ -29,6 +29,7 @@
                 {{ user.username }}
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+                <a class="dropdown-item" href = "{% url 'profiles:profile_detail' pk=user.pk %}">My Profile</a>
                 <a class="dropdown-item" href="{% url 'problem:problem_list' %}">Problem List</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
@@ -49,8 +50,12 @@
     </div>
 
     
-    {% if user.is_authenticated  %}
-      <p>Hi <a href = "{% url 'profiles:profile_detail' pk=user.pk %}">{{ user.username}}</a></p>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
     {% endif %}
     
     <!-- Optional JavaScript -->

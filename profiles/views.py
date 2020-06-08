@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.urls import reverse
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -23,7 +24,8 @@ class UserProfileDetailView(DetailView):
 @login_required
 def profile_update_view(request,pk):
     """
-        You need to deny the permission when someone is trying to edit someone else's profile
+        Let's you update the profile of a user.
+        Uses two forms to do that, one for user , one for profile
     """
 
     # If this is not the actual user, then raise permissionDenied
@@ -37,10 +39,10 @@ def profile_update_view(request,pk):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-
+            messages.success(request,'Your profile has been updated successfully!')
             return HttpResponseRedirect(reverse('profiles:profile_detail', kwargs={'pk': str(request.user.pk)}))
-        # else:
-        #     messages.error(request, _('Please correct the error below.'))
+        else:
+            messages.error(request, 'Please correct the errors')
     else:
         user_form = UserForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
