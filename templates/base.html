@@ -49,8 +49,8 @@
     </div>
 
     
-    {% if user.is_authenticated and user.profile %}
-      <p>Hi <a href = "{% url 'profiles:profile_detail' pk=user.profile.pk %}">{{ user.username}}</a></p>
+    {% if user.is_authenticated  %}
+      <p>Hi <a href = "{% url 'profiles:profile_detail' pk=user.pk %}">{{ user.username}}</a></p>
     {% endif %}
     
     <!-- Optional JavaScript -->
