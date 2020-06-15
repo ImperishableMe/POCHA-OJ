@@ -6,19 +6,19 @@
         <div class='problem-header'>
             <h2>{{problem.title}}</h2>
             <p>Time Limit : {{problem.time_limit}}sec | Memory Limit :{{problem.memory_limit}}MB</p>
-            {% comment %} submit link {% endcomment %}
+            {% comment %} submit link 
             <a href="{% url 'problem:submit' pid=problem.pk %}" class="btn btn-outline-success" role="button">Submit</a>
-
+            {% endcomment %}
 
             <div class='problem-statement'>
-                <p>{{problem.statement|escape|linebreaks}}</p>
+                <p>{{statement|escape|linebreaks}}</p>
             </div>
-            {% for case in sample_test_cases %}
+            {% for in,out in samples %}
                 <div class='sample-input-output'>
                     <h3>Sample Input:</h3>
-                    <p>{{case.case_input|escape|linebreaks}}</p>
+                    <p>{{in|escape|linebreaks}}</p>
                     <h3>Sample Output:</h3>
-                    <p>{{case.expected_output|escape|linebreaks}}</p>
+                    <p>{{out|escape|linebreaks}}</p>
                 </div>
 
             {% endfor %}

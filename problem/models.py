@@ -5,99 +5,79 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
 
 
+
 class Problem(models.Model):
     '''
-        Attributes:
-        title = problem title
-        statement = for the time being using textField
-        time_limit = 0 <= time_limit <= 5.0 
-        memery_limit = in MB ( max value 1024MB )
-
+        title : problem title
+        statement : FileField
+        time_limit : 0 <= time_limit <= 5.0 ( default 3.0)
+        memery_limit: in MB ( max value 1024MB ,default : 256MB)
+        author : problem author
+        is_public : boolean to trace the problems visibility
+        judge_solution : FileField containing the intended soln(assumed to have no errors)
+        creation_time : duh !
     '''
-    title = models.CharField(blank = False, null = False, max_length=25)
-    statement = models.TextField()
+
+    title = models.CharField(blank = False, max_length=25)
+    statement = models.FileField(upload_to='problem_statements/%Y/%m/%d')
     time_limit = models.FloatField(default = 3.0, validators=[MinValueValidator(0.0),MaxValueValidator(5.0)])
     memory_limit = models.PositiveSmallIntegerField(default = 256, validators = [MaxValueValidator(1024)] )
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='created_problems')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='created_problems')
     is_public = models.BooleanField(default=False)
-    adding_time = models.DateTimeField(auto_now_add=True)
+    creation_time = models.DateTimeField(auto_now_add=True)
+    judge_solution = models.FileField(upload_to='judge_soln/%Y/%m/%d',blank=True)
+
+
+    def get_problem_statement_for_rendering(self):
+        '''
+            method for loading the statment file into view context.
+        '''
+        lines = None
+        with self.statement.open('r') as f :
+            lines = f.read()
+        return lines
+
 
     def __str__(self):
         return str(self.pk) + "-" + self.title
     
 
+
+def get_testcase_path(instance,filename):
+    ''' 
+        gives path to store the testcase. 
+        For the time being problem_id/filename is used
+    '''
+    return 'testcases/{0}/{1}'.format(instance.problem.id,filename)
+
     
 class TestCase(models.Model):
     '''
-        is_sample = True : sample testcase
-                    False : not
-        
+        is_sample : Sample visibility 
+        input_file : input as a file 
+        problem : the owner problem
+        output_file : expected output
     '''
     problem = models.ForeignKey(Problem, related_name = 'testcases',on_delete = models.CASCADE)
-    case_input = models.TextField(blank=False,null = False)
-    expected_output = models.TextField(blank=False,null=False)
+    input_file = models.FileField(upload_to=get_testcase_path, blank=True)
+    output_file = models.FileField(upload_to=get_testcase_path,blank=True)
     is_sample = models.BooleanField(default=False)
+
+
+    def get_input_file_for_rendering(self):
+        
+        lines = None
+        with self.input_file.open('r') as f :
+            lines = f.read()
+        return lines
+    
+    def get_output_file_for_rendering(self):
+
+        lines = None
+        with self.output_file.open('r') as f :
+            lines = f.read()
+        return lines
 
     def __str__(self):
         return str(self.problem.pk) + '-' + str(self.pk) 
 
-
-class Submission(models.Model):
-    C = 1
-    CPP = 2
-    JAVA = 3
-    PYTHON = 4
-    ####
-    WA = 1
-    AC = 2
-    TLE = 3
-    MLE = 4
-    RUNNING = 5
-    IN_QUEUE = 6
-    RE = 7
-    CE = 8
-
-    languages = (
-        (C, _('C')),
-        (CPP, _('CPP')),
-        (JAVA,_('JAVA')),
-        (PYTHON,_('PYTHON')),
-    )
-    VERDICT_STATES = (
-        (WA, _('WRONG ANSWER')),
-        (AC, _('ACCEPTED')),
-        (TLE,_('TLE')),
-        (MLE,_('MLE')),
-        (RE,_('RUNTIME ERROR')),
-        (RUNNING,_('RUNNING')),
-        (IN_QUEUE,_('IN QUEUE')),
-        (CE,_('COMPILATION ERROR')),
-    )
-
-    problem = models.ForeignKey(Problem,related_name='submissions',on_delete=models.CASCADE)   
-    time = models.DateTimeField(auto_now_add=True)
-    code = models.TextField()
-    time_required = models.FloatField(blank=True,null=True)
-    memory_required = models.IntegerField(blank=True,null=True)
-    submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='my_submissions')
-
-    language = models.SmallIntegerField(
-        default = CPP,
-        choices = languages
-    )
-
-    verdict = models.SmallIntegerField(
-        default = IN_QUEUE,
-        choices = VERDICT_STATES    
-    )
-    on_test_case = models.SmallIntegerField(default=0)     
-        
-
-    def __str__(self):
-        return "SID:{},LAN:{},time:{}".format(self.pk,self.language,self.time)
-
-    def get_absolute_url(self):
-        return reverse('problem:submission_list')
-
-
-#class SubmissionHistory
