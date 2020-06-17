@@ -6,9 +6,9 @@
         <div class='problem-header'>
             <h2>{{problem.title}}</h2>
             <p>Time Limit : {{problem.time_limit}}sec | Memory Limit :{{problem.memory_limit}}MB</p>
-            {% comment %} submit link 
-            <a href="{% url 'problem:submit' pid=problem.pk %}" class="btn btn-outline-success" role="button">Submit</a>
-            {% endcomment %}
+            
+            <a href="{% url 'submissions:submit' pid=problem.pk %}" class="btn btn-outline-success" role="button">Submit</a>
+            
 
             <div class='problem-statement'>
                 <p>{{statement|escape|linebreaks}}</p>

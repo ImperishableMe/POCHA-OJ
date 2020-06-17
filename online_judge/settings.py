@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 #    my apps
+    'submissions.apps.SubmissionsConfig',
     'problem.apps.ProblemConfig',
     'accounts.apps.AccountsConfig',
     'profiles.apps.ProfilesConfig',
@@ -83,12 +84,8 @@ WSGI_APPLICATION = 'online_judge.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myproject',
-        'USER': 'myprojectuser',
-        'PASSWORD': 'pass123',
-        'HOST' : 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'sqlite3.db'),
     }
 }
 

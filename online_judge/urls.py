@@ -23,6 +23,7 @@ from django.views.generic.base import TemplateView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('problem/',include('problem.urls')),
+    path('submission/',include('submissions.urls')),
     ### provides signup
     path('accounts/',include('accounts.urls')), 
     ### provides login,logout
@@ -33,4 +34,6 @@ urlpatterns = [
     path('',TemplateView.as_view(template_name='registration/home.html'),name='home'),
     
 
-] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+]
+if settings.DEBUG : 
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

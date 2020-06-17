@@ -22,10 +22,10 @@
             {% for submission in submission_list %}
                 <tr>
                     <td>{{submission.id}}</td>
-                    <td>{{submission.time}}</td>
+                    <td>{{submission.submission_time}}</td>
                     <td>{{submission.problem.title}}</td>
                     <td>{{submission.get_verdict_display}}</td>
-                    <td>{{submission.time_required}} ms</td>
+                    <td>{{submission.time_required|floatformat:2 }} ms</td>
                     <td>{{submission.memory_required}} KB</td>
                     <td>{{submission.on_test_case}}/{{submission.problem.testcases.count }}</td>
                 </tr>

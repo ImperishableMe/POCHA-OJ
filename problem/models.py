@@ -30,7 +30,7 @@ class Problem(models.Model):
 
     def get_problem_statement_for_rendering(self):
         '''
-            method for loading the statment file into view context.
+        method for loading the statment file into view context.
         '''
         lines = None
         with self.statement.open('r') as f :
@@ -38,9 +38,16 @@ class Problem(models.Model):
         return lines
 
 
+
     def __str__(self):
         return str(self.pk) + "-" + self.title
     
+
+    def is_submitable(self):
+        """
+        If users can submit to this problem, the problem may not be public yet
+        """
+        return self.is_public
 
 
 def get_testcase_path(instance,filename):
@@ -62,6 +69,7 @@ class TestCase(models.Model):
     input_file = models.FileField(upload_to=get_testcase_path, blank=True)
     output_file = models.FileField(upload_to=get_testcase_path,blank=True)
     is_sample = models.BooleanField(default=False)
+    description = models.TextField(blank=True)
 
 
     def get_input_file_for_rendering(self):

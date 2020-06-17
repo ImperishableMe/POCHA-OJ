@@ -2,3 +2,6 @@ media/*
 !media/.gitkeep
 *.out
 *.pyc
+sqlite3.db
+garbage/*
+executables/*
