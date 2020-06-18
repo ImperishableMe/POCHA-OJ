@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>Submitted Code:</p>
+    <div class="code">
+        <pre>
+            {{code|escape|linebreaks}}
+        </pre>
+    </div>
+
+    {% for user_out,expected_out in test_list %}
+       <div class='container'>
+            <p>Test Case : {{ forloop.counter }}</p>
+            <p>User_output: </p>
+            <pre>
+                {{ user_out|escape|linebreaks }}
+            </pre>
+            <p>Expected_output: </p>
+            <pre>
+                {{ expected_out|escape|linebreaks }}
+            </pre>
+                
+       </div> 
+    {% endfor %}
+
+{% endblock content %}

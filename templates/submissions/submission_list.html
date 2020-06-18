@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Judge Status
+    Personal Submission
 {% endblock title %}       
 
 {% block content %}
@@ -14,20 +14,20 @@
             <th scope="col">Verdict</th>
             <th scope="col">Time</th>
             <th scope="col">Memory</th>
-            <th scope="col">test so far</th>
+            <th scope="col">Test Passed</th>
             </tr>
         </thead>
 
         <tbody>
             {% for submission in submission_list %}
                 <tr>
-                    <td>{{submission.id}}</td>
+                    <td><a href="{% url 'submissions:submission_detail' pk=submission.pk %}">{{submission.id}}</a></td>
                     <td>{{submission.submission_time}}</td>
-                    <td>{{submission.problem.title}}</td>
+                    <td><a href="{% url 'problem:problem_detail' pk=submission.problem_id %}">{{submission.problem_title}}</a></td>
                     <td>{{submission.get_verdict_display}}</td>
                     <td>{{submission.time_required|floatformat:2 }} ms</td>
                     <td>{{submission.memory_required}} KB</td>
-                    <td>{{submission.on_test_case}}/{{submission.problem.testcases.count }}</td>
+                    <td>{{submission.on_test_case}}/{{submission.problem_test_count }}</td>
                 </tr>
             {% endfor %}
             

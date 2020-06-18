@@ -46,8 +46,19 @@ class Submission(models.Model):
         return "SID:{},Problem:{},time:{}".format(self.pk,self.problem,self.submission_time)
 
 
+    def get_code(self):
+        """
+        Get the code as strings
+        """
+        lines = None
+        with self.code.open('r') as f :
+            lines = f.read()
+        return lines
+
+
     def get_absolute_url(self):
         return reverse('submissions:submission_list')
+
 
 
 class SubmissionHistory(models.Model):
@@ -61,4 +72,11 @@ class SubmissionHistory(models.Model):
         choices = States.VERDICT_STATES    
     )
 
+
+    def get_user_output(self):
+
+        lines = None
+        with self.user_output.open('r') as f:
+            lines = f.read()
+        return lines
     
