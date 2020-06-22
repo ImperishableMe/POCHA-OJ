@@ -67,9 +67,6 @@ class SubmissionListView(LoginRequiredMixin,ListView):
         return context
 
 
-
-
-
 class SubmissionDetailView(LoginRequiredMixin,DetailView):
     """
     Detail with test case output and input
@@ -89,6 +86,16 @@ class SubmissionDetailView(LoginRequiredMixin,DetailView):
 
         context['test_list'] = test_list
         return context
+
+
+
+class StatusView(ListView):
+    template_name = 'submissions/status.html'
+    model = models.Submission
+
+    def get_queryset(self):
+        return models.Submission.objects.select_related('submitted_by').order_by('-submission_time')
+
 
 
 

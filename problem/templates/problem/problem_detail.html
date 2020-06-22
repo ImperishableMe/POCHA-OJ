@@ -8,7 +8,7 @@
             <p>Time Limit : {{problem.time_limit}}sec | Memory Limit :{{problem.memory_limit}}MB</p>
             
             <a href="{% url 'submissions:submit' pid=problem.pk %}" class="btn btn-outline-success" role="button">Submit</a>
-            
+            <a href="{% url 'problem:problem_rank' pid=problem.pk %}" class="btn btn-outline-success" role="button">Rank</a>
 
             <div class='problem-statement'>
                 <p>{{statement|escape|linebreaks}}</p>
