@@ -11,7 +11,16 @@
             <a href="{% url 'problem:problem_rank' pid=problem.pk %}" class="btn btn-outline-success" role="button">Rank</a>
 
             <div class='problem-statement'>
-                <p>{{statement|escape|linebreaks}}</p>
+                <h3>Problem statement</h3>
+                <p>{{problem.statement|safe}}</p>
+            </div>
+            <div class='input-spec'>
+                <h3>Input Specification</h3>
+                <p>{{problem.input_specification|safe}}</p>
+            </div>
+            <div class='output-spec'>
+                <h3>Output Specification</h3>
+                <p>{{problem.output_specification|safe}}</p>
             </div>
             {% for in,out in samples %}
                 <div class='sample-input-output'>

@@ -6,8 +6,13 @@
         <h1 class="display- ">Pocha Online Judge</h1>
         <p class="lead">A Futile Effort to Copy LightOJ </p>
         <p class="lead">
-        <a class="btn btn-primary btn-lg" href="{% url 'problem:problem_list' %}"
-        role="button">View All Problems</a>
+            <a class="btn btn-primary btn-lg" href="{% url 'problem:problem_list' %}"
+            role="button">View All Problems</a>
         </p>
     </div>
+
+    <div>
+        <a href="{% url 'newProblems:create_problem' %}" class="btn btn-secondary">Create new Problem</a>
+    </div>
+      
 {% endblock content %}

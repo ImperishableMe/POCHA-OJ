@@ -4,6 +4,10 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
 
+from ckeditor.fields import RichTextField
+
+
+
 
 
 class Problem(models.Model):
@@ -19,7 +23,9 @@ class Problem(models.Model):
     '''
 
     title = models.CharField(blank = False, max_length=25)
-    statement = models.FileField(upload_to='problem_statements/%Y/%m/%d')
+    statement = RichTextField(blank=False)
+    input_specification = RichTextField(blank=False)
+    output_specification = RichTextField(blank=False)
     time_limit = models.FloatField(default = 3.0, validators=[MinValueValidator(0.0),MaxValueValidator(5.0)])
     memory_limit = models.PositiveSmallIntegerField(default = 256, validators = [MaxValueValidator(1024)] )
     author = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='created_problems')
@@ -27,27 +33,18 @@ class Problem(models.Model):
     creation_time = models.DateTimeField(auto_now_add=True)
     judge_solution = models.FileField(upload_to='judge_soln/%Y/%m/%d',blank=True)
 
-
-    def get_problem_statement_for_rendering(self):
-        '''
-        method for loading the statment file into view context.
-        '''
-        lines = None
-        with self.statement.open('r') as f :
-            lines = f.read()
-        return lines
-
-
-
-    def __str__(self):
-        return str(self.pk) + "-" + self.title
     
-
     def is_submitable(self):
         """
         If users can submit to this problem, the problem may not be public yet
         """
         return self.is_public
+
+    def get_absolute_url(self):
+        return reverse('problem:problem_detail', kwargs = {'pk' : self.pk});
+
+    def __str__(self):
+        return str(self.pk) + "-" + self.title
 
 
 def get_testcase_path(instance,filename):

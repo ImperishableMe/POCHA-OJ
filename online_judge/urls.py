@@ -31,9 +31,9 @@ urlpatterns = [
     ### profile links added
     path('profile/', include('profiles.urls')),
     ### home page for the time being
+    path('create-problem/',include('newProblems.urls')),
     path('',TemplateView.as_view(template_name='registration/home.html'),name='home'),
     
-
 ]
 if settings.DEBUG : 
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

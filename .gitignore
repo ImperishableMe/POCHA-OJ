@@ -5,3 +5,4 @@ media/*
 sqlite3.db
 garbage/*
 executables/*
+staticfiles/*

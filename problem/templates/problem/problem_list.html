@@ -18,12 +18,22 @@
                 <div class="card-body">
                 {{ problem.title }}
                 </div>
-
                 <div class="card-footer text-center text-muted">
                 <a href="{% url 'problem:problem_detail' pk=problem.pk %}">View</a>
+                <button class="Like_button">Like</button>
+                </div>
             </div>
     {% endfor %}
-        
     
 {% endblock content %}
-    
+
+{% block javascript %}
+    <script>
+        var ev_class = document.querySelector(".Like_button");
+        ev_class.addEventListener("click",(event)=>{
+
+            
+            console.log("sad!");
+        });
+    </script>
+{% endblock javascript %}
