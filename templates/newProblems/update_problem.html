@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a style="float: right;" href="{% url 'newProblems:add_testcase' pid=problem.pk %}">Add a TestCase</a>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+    
+    
+{% endblock content %}

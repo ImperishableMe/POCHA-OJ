@@ -83,6 +83,9 @@ class TestCase(models.Model):
             lines = f.read()
         return lines
 
+    def get_absolute_url(self):
+        return reverse('problem:problem_detail', kwargs = {'pk' : self.problem_id })
+
     def __str__(self):
         return str(self.problem.pk) + '-' + str(self.pk) 
 
