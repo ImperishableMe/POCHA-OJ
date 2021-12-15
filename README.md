@@ -1,6 +1,4 @@
 # POCHA-OJ
-  -> Powered by *COVID_19 virus*
-
 
   ## Installation Process
 
